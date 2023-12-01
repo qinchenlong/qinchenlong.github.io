@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primary Hypertension Fisk Score Calculator</title>
+    <style>
+        body {
+    font-family: 'Times New Roman', serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-size: 18px;
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 1000; /* 设置 z-index 以确保置顶 */
+}
+
+input, select {
+    padding: 8px;
+    margin: 5px;
+}
+
+button {
+    padding: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px; /* 设置图片与上方的间距 */
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Primary Hypertension Fisk Score Calculator</h1>
+        <label for="FBG">FBG:</label>
+        <input type="number" id="FBG" placeholder="Enter value">
+
+        <label for="LDL">LDL.C:</label>
+        <input type="number" id="LDL" placeholder="Enter value">
+
+        <label for="UA">UA:</label>
+        <input type="number" id="UA" placeholder="Enter value">
+
+        <label for="Gender">Gender:</label>
+        <select id="Gender">
+            <option value="1">Male</option>
+            <option value="0">Female</option>
+        </select>
+
+        <label for="AGE">AGE:</label>
+        <input type="number" id="AGE" placeholder="Enter value">
+
+        <label for="FamilyHistory">Family history of hypertension:</label>
+        <select id="FamilyHistory">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+
+        <label for="Breastfeeding">Breastfeeding:</label>
+        <select id="Breastfeeding">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+
+        <button onclick="calculateY()">Edit score</button>
+
+        <p id="result">Risk score: </p>
+
+        <!-- 插入图片 -->
+        <img src="Rplot_nomogram.png" alt="Description of the image">
+    </div>
+
+    <script>
+        function calculateY() {
+            // Get user input values
+            var FBG = parseFloat(document.getElementById('FBG').value) || 0;
+            var LDL = parseFloat(document.getElementById('LDL').value) || 0;
+            var UA = parseFloat(document.getElementById('UA').value) || 0;
+            var Gender = parseFloat(document.getElementById('Gender').value) || 0;
+            var AGE = parseFloat(document.getElementById('AGE').value) || 0;
+            var FamilyHistory = parseFloat(document.getElementById('FamilyHistory').value) || 0;
+            var Breastfeeding = parseFloat(document.getElementById('Breastfeeding').value) || 0;
+
+            // Calculate the formula
+            var exponent = Math.exp(-(-15.6204 + 1.8038 * FBG + 0.7065 * LDL + 0.0093 * UA + 1.2045 * Gender + 0.1025 * AGE + 3.7551 * FamilyHistory - 3.3071 * Breastfeeding));
+            var y = 1 / (exponent + 1);
+
+            // Display the calculation result
+            document.getElementById('result').innerHTML = 'Calculation Result: ' + y.toFixed(4);
+        }
+    </script>
+</body>
+</html>
